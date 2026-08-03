@@ -15,6 +15,72 @@ Through advanced SQL querying, this analysis transforms raw, normalized relation
   * `Addresses` (Geographical locations)
   * `Referrals` (Referral codes, Bonus amounts, Validity windows)
   * `Employment_details` (Income indicators)
+  erDiagram
+    PROFILES ||--o{ TENANCY_HISTORY : "profile_id"
+    PROFILES ||--o{ REFERRAL : "profile_id"
+    PROFILES ||--o{ EMPLOYMENT_STATUS : "profile_id"
+    HOUSES ||--o{ TENANCY_HISTORY : "house_id"
+    HOUSES ||--o{ ADDRESSES : "house_id"
+
+    PROFILES {
+        int profile_id PK
+        string first_name
+        string last_name
+        string email_id
+        string phone
+        string city
+        date created_at
+        string gender
+        string referral_code
+        string marital_status
+    }
+
+    TENANCY_HISTORY {
+        int id PK
+        int profile_id FK
+        int house_id FK
+        date move_in_date
+        date move_out_date
+        float rent
+        string bed_type
+        string move_out_reason
+    }
+
+    HOUSES {
+        int house_id PK
+        string house_type
+        string bhk_type
+        int bed_count
+        string furnishing_type
+        int beds_vacant
+    }
+
+    ADDRESSES {
+        int id PK
+        string name
+        string description
+        string city
+        string pincode
+        int house_id FK
+    }
+
+    REFERRAL {
+        int id PK
+        int profile_id FK
+        float referrer_bonus_amount
+        boolean referral_valid
+        date valid_from
+        date valid_till
+    }
+
+    EMPLOYMENT_STATUS {
+        int id PK
+        int profile_id FK
+        string latest_employer
+        string official_mail_id
+        int years_experience
+        string occupational_category
+    }
 
 ## 📈 Key Insights & Findings
 
